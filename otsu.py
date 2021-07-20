@@ -8,14 +8,19 @@ Created on Tue Jul 20 13:13:43 2021
 import cv2 as cv
 import numpy as np
 from matplotlib import pyplot as plt
+
 img = cv.imread('img3.jpg',0)
+
 # global thresholding
 ret1,th1 = cv.threshold(img,127,255,cv.THRESH_BINARY)
+
 # Otsu's thresholding
 ret2,th2 = cv.threshold(img,0,255,cv.THRESH_BINARY+cv.THRESH_OTSU)
+
 # Otsu's thresholding after Gaussian filtering
 blur = cv.GaussianBlur(img,(5,5),0)
 ret3,th3 = cv.threshold(blur,0,255,cv.THRESH_BINARY+cv.THRESH_OTSU)
+
 # plot all the images and their histograms
 images = [img, 0, th1,
           img, 0, th2,
@@ -32,6 +37,12 @@ for i in range(3):
     plt.title(titles[i*3+2]), plt.xticks([]), plt.yticks([])
 plt.show()
 
+# Otsu's thresholding after bilateral filtering
+bilateral_filter=cv.bilateralFilter(img, 5, 20, 100,borderType=cv.BORDER_CONSTANT)
+ret4,th4 = cv.threshold(bilateral_filter,0,255,cv.THRESH_BINARY+cv.THRESH_OTSU)
+
 cv.imwrite('gaussianOtsu.jpg',th3)
 cv.imwrite('otsu.jpg',th2)
 cv.imwrite('globalT.jpg',th1)
+cv.imwrite('bilateralOtsu.jpg',th4)
+
