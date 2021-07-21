@@ -10,6 +10,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from scipy.ndimage import interpolation as inter
 
+"""
 def correct_skew(image, delta=1, limit=5):
     def determine_score(arr, angle):
         data = inter.rotate(arr, angle, reshape=False, order=0)
@@ -35,14 +36,16 @@ def correct_skew(image, delta=1, limit=5):
               borderMode=cv2.BORDER_REPLICATE)
 
     return best_angle, rotated
-
+"""
 #reading the original image using OpenCV
-image = cv2.imread('img2.jpg')
+rotated = cv2.imread('img2.jpg')
 
+"""
 #Converting the colored image to greyscale
 angle, rotated = correct_skew(image)
 print(angle)
 cv2.imwrite('rotated.jpg', rotated)
+"""
 gray = cv2.cvtColor(rotated,cv2.COLOR_BGR2GRAY)
 thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
